@@ -6,17 +6,33 @@ Bernd Accou, Mohammad Jalilpour Monesi, Jair Montoya Martinez, Hugo Van hamme, T
 
 ### Models
 
-Code for the baseline model and the dilated convolutional network can be found in `baseline_model.py` and `dilated_model.py` respectively.
+Code for the baseline decoder model, baseline convolutional model and the dilated convolutional network can be found in `baseline_decoder_model.py`, `baseline_convolutional_model.py` and `dilated_model.py` respectively.
 
 Models are constructed using the Keras API of tensorflow and can be trained by calling the `fit` method:
 
-#### Linear baseline
+#### Linear decoder baseline model
 
-![Linear baseline](images/simple_conv.svg)
+![Linear baseline model](images/baseline_decoder_model.svg)
+
+Training the linear baseline is equivalent to training the linear decoder
+```
+from baseline_model import linear_decoder, linear_decoder_baseline
+
+decoder = linear_decoder()
+decoder.fit(eeg_train, good_env_train)
+
+baseline = linear_decoder_baseline(decoder)
+results = baseline.evaluate([eeg_test, env1_test, env2_test])
+```
+
+
+#### Convolutional baseline model
+
+![Convolutional baseline model](images/baseline_convolutional_model.svg)
 
 Training/Evaluating the simple convolutional model is as described in the Keras documentation
 ```
-from baseline_model import simple_convolutional_model
+from baseline_convolutional_model import simple_convolutional_model
 
 conv_model = simple_convolutional_model()
 conv_model.fit([eeg_train, env1_train, env2_train], labels)
